@@ -6,8 +6,10 @@ target 'instagram' do
   use_frameworks!
 
   # Pods for instagram
-    pod 'Parse'
-
+    pod 'Firebase/Core'
+    pod 'Firebase/Auth'
+    pod 'Firebase/Database'
+    pod 'GoogleSignIn'
 
   target 'instagramTests' do
     inherit! :search_paths

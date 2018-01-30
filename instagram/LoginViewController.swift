@@ -8,7 +8,9 @@
 //
 
 import UIKit
-import Parse
+import Firebase
+import FirebaseAuth
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
 
@@ -22,6 +24,17 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            // ...
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        Auth.auth().removeStateDidChangeListener(handle!)
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -29,39 +42,14 @@ class LoginViewController: UIViewController {
     
     @IBAction func onSignIn(_ sender: Any) {
         
-        PFUser.logInWithUsername(inBackground: usernameField.text!, password: passwordField.text!) { (user: PFUser?, error: Error?) in
-            
-            if user != nil {
-                print("logged in");
-                self.performSegue(withIdentifier: "loginSeque", sender: nil)
-                
-            }
-            
-        }
+
         
     }
     
     
     @IBAction func onSignUp(_ sender: Any) {
-            // initialize a user object
-            let newUser = PFUser()
-            
-            // set user properties
-            newUser.username = usernameField.text
-            newUser.password = passwordField.text
+
         
-            
-            // call sign up function on the object
-            newUser.signUpInBackground { (success: Bool, error: Error?) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    
-                    
-                } else {
-                    print("User Registered successfully")
-                    self.performSegue(withIdentifier: "loginSeque", sender: nil)
-                }
-            }
         
     }
     
