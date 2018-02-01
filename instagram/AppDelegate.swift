@@ -79,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             // User is signed in
             print("successfully google logged in");
+            
         }
     }
     

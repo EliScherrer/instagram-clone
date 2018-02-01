@@ -26,6 +26,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
         //attach handler that listens for when the user gets logged in
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            print("handler triggered")
             if let user = user {
                  self.performSegue(withIdentifier: "loginSegue", sender: nil)
             } else {
@@ -38,15 +39,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
         
         googleSignInButton.style = .wide
-    }
-    
-    //detach handler when screens change
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        //remove the handler that listens for when the user logs in
-        Auth.auth().removeStateDidChangeListener(handle!)
-        
-        super.viewWillDisappear(animated)
     }
     
     
