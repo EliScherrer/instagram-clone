@@ -19,6 +19,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
     
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    
     var handle: AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
@@ -39,6 +43,30 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().signIn()
         
         googleSignInButton.style = .wide
+        
+        //set background gradient
+        let grad = CAGradientLayer()
+        grad.colors = [
+            UIColor.red.cgColor, // top color
+            UIColor.blue.cgColor // bottom color
+        ]
+        grad.locations = [
+            0.0, // start gradating at top of view
+            1.0  // end gradating at bottom of view
+        ]
+        grad.frame = view.bounds
+        view.layer.insertSublayer(grad, at: 0)
+        
+        //add borders to the buttons
+        signInButton.layer.borderColor = UIColor.white.cgColor
+        signInButton.layer.borderWidth = 1
+        signUpButton.layer.borderColor = UIColor.white.cgColor
+        signUpButton.layer.borderWidth = 1
+        
+        //change display of text fields
+        emailField.borderStyle = UITextBorderStyle.roundedRect
+        passwordField.borderStyle = UITextBorderStyle.roundedRect
+        
     }
     
     
@@ -81,6 +109,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         }
         
     }
-    
+
     
 }
