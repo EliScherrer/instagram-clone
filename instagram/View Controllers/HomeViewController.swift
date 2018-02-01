@@ -11,12 +11,19 @@ import Firebase
 import FirebaseAuth
 import GoogleSignIn
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     
     var window: UIWindow?
+    var posts: [String] = ["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
 
         // print out the user info
         //in your apps, you can get the user's basic profile information from the FIRUser object. See Manage Users.
@@ -32,6 +39,24 @@ class HomeViewController: UIViewController {
         GIDSignIn.sharedInstance().signOut()
         try! Auth.auth().signOut()
         
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+        //        if posts != nil {
+//            return posts.count
+//        }
+//        else {
+//            return 0
+//        }
+    }
+    
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
+        
+        
+        return cell
     }
     
     
