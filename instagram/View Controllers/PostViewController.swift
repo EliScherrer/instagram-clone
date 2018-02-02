@@ -120,7 +120,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     
                     //setup database refrences
                     let ref = Database.database().reference(fromURL: "https://instagram-clone-bf6e7.firebaseio.com/")
-                    let postRef = ref.child("posts")
+                    let postRef = ref.child("posts").childByAutoId()
                     postRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                         if err != nil {
                             print(err)
