@@ -123,7 +123,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     let postRef = ref.child("posts").childByAutoId()
                     postRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
                         if err != nil {
-                            print(err)
+                            print(err ?? "error?")
                         }
                         else {
                             print("data uploaded successfully")

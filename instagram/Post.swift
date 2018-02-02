@@ -17,8 +17,6 @@ class Post: NSObject {
     let comments: [String]?
     let likes: Int?
     
-    
-    
     init(owner: String, postedDate: Date, photoUrl: String, location: String, caption: String, comments: [String], likes: Int) {
         
         self.owner = owner
@@ -29,6 +27,4 @@ class Post: NSObject {
         self.comments = comments
         self.likes = likes
     }
-    
-    
 }

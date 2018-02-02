@@ -168,6 +168,14 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="captionLabel" destination="HkW-Dk-SN2" id="79J-sZ-IXf"/>
+                                            <outlet property="postImage" destination="sRi-hO-Z4l" id="cSe-LM-50i"/>
+                                            <outlet property="profileImage" destination="Rce-5f-DC1" id="bnN-aa-QkN"/>
+                                            <outlet property="timestampLabel" destination="iDn-wV-GRz" id="GDP-wF-zgC"/>
+                                            <outlet property="usernameLabel" destination="FwR-Lz-4JB" id="dnO-Sg-DtR"/>
+                                            <outlet property="usernameLabel2" destination="eIs-bG-sFL" id="L6h-lq-5gT"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

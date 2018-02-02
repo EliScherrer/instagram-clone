@@ -22,9 +22,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var tableView: UITableView!
     
-    let ref = Database.database().reference(withPath: "posts")
-    
-    var posts: [String] = ["a","b","c","d","e","a","b","c","d","e","a","b","c","d","e"]
+    var posts: [Post]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,11 +71,50 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
+        //get the data and create Post objects
+        fetchAndStorePosts()
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func fetchAndStorePosts() {
+//        let ref = Database.database().reference(fromURL: "https://instagram-clone-bf6e7.firebaseio.com/")
+//        let postRef = ref.child("posts").childByAutoId()
+        
+        let ref = Database.database().reference(fromURL: "https://instagram-clone-bf6e7.firebaseio.com/")
+        ref.child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            if let values = snapshot.value as? NSDictionary {
+
+                for (key, value) in values {
+                    print(key)
+                    print(value)
+                    if let obj = value as? [String: Any] {
+                        
+                        let owner = obj["owner"] as! String
+                        let dateString = obj["date"] as! String
+                        let photoUrl = obj["imageURL"] as! String
+                        let location = obj["location"] as! String
+                        let caption = obj["caption"] as! String
+                        let comments = ["comments"] 
+                        let likes = obj["likes"] as! Int
+                        
+                        //convert the date string to a date object
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let date = dateFormatter.date(from: dateString)
+                        
+                        
+                        
+                        let post = Post(owner: owner, postedDate: date!, photoUrl: photoUrl, location: location, caption: caption, comments: comments, likes: likes)
+                        self.posts?.append(post)
+                    }
+                }
+            }
+            
+        }) { (error) in
+            print("error: " + error.localizedDescription)
+        }
+        
     }
     
     @IBAction func onLogout(_ sender: Any) {
@@ -88,22 +125,31 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
-        //        if posts != nil {
-//            return posts.count
-//        }
-//        else {
-//            return 0
-//        }
+        if posts != nil {
+            return posts!.count
+        }
+        else {
+            return 0
+        }
     }
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         
+        let post = posts![indexPath.row]
+        
+        
+        
         
         return cell
     }
     
     
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }
