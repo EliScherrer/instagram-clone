@@ -134,6 +134,7 @@
 		3EB30B15201FC5510059F5AA /* instagram */ = {
 			isa = PBXGroup;
 			children = (
+				3E5D0F722023F1AF0096F528 /* Post.swift */,
 				3ED79C9720224730008DDDAC /* View Controllers */,
 				3E6A813D2023C93900833106 /* Views */,
 				3ED15D5B201FEB2500DE5EB5 /* GoogleService-Info.plist */,
@@ -142,7 +143,6 @@
 				3EB30B16201FC5510059F5AA /* AppDelegate.swift */,
 				3EB30B1A201FC5510059F5AA /* Main.storyboard */,
 				3EB30B1F201FC5510059F5AA /* LaunchScreen.storyboard */,
-				3E5D0F722023F1AF0096F528 /* Post.swift */,
 			);
 			path = instagram;
 			sourceTree = "<group>";
