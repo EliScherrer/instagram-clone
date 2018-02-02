@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.dataSource = self
         tableView.delegate = self
+        self.tableView.separatorStyle = .none
 
         // print out the user info
         //in your apps, you can get the user's basic profile information from the FIRUser object. See Manage Users.
