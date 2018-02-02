@@ -28,6 +28,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     var postImage: UIImage?
     
+    let storage = Storage.storage()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,9 +88,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //get the display name from the current firebase user
         let user = Auth.auth().currentUser
-        let owner: String?
+        var owner: String = ""
         if let user = user {
-            owner = user.displayName
+            owner = user.uid
         }
         
         //convert date to string
@@ -96,11 +98,41 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = dateFormatter.string(from: Date())
         
+        //only proceed if an image has been selected
+        if postImage != nil {
+            //upload the photo with a unique id
+            let imageName = NSUUID().uuidString
+            let storageRef = storage.reference().child("\(imageName).png ")
         
-        
-        
-        
-        
+            //async uploade the image
+            if let uploadData = UIImagePNGRepresentation(postImage!) {
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    
+                    //snag the uploaded image's url from metadata
+                    let imageURL = metadata?.downloadURL()?.absoluteString
+                    
+                    let values = ["owner": owner, "location": location!, "caption": caption!, "comments": comments, "likes": likes, "date": date, "imageURL": imageURL!] as [String : Any]
+                    
+                    //setup database refrences
+                    let ref = Database.database().reference(fromURL: "https://instagram-clone-bf6e7.firebaseio.com/")
+                    let postRef = ref.child("posts")
+                    postRef.updateChildValues(values, withCompletionBlock: { (err, ref) in
+                        if err != nil {
+                            print(err)
+                        }
+                        else {
+                            print("data uploaded successfully")
+                        }
+                    })
+                    
+                })
+            }
+        }
     }
     
     
