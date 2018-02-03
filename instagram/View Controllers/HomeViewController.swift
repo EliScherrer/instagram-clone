@@ -73,7 +73,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         //get the data and create Post objects
-        fetchAndStorePosts()
+//        posts = [Post]()
+//        fetchAndStorePosts()
         
         
     }

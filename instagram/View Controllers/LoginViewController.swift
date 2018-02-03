@@ -67,15 +67,11 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         emailField.borderStyle = UITextBorderStyle.roundedRect
         passwordField.borderStyle = UITextBorderStyle.roundedRect
         
+        //dismiss the keyboard when you tap somewhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     //normal sign in with email/password
     @IBAction func onSignIn(_ sender: Any) {
@@ -109,6 +105,18 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         }
         
     }
+    
+    //hide the keyboard
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
 
     
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }

@@ -27,6 +27,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     @IBOutlet weak var captionField: UITextField!
     
     var postImage: UIImage?
+    var keyboardRealSize: CGRect?
     
     let storage = Storage.storage()
     
@@ -38,6 +39,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //setup the image to be clicked on
         postImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleImagePick(_:)) ))
         postImageView.isUserInteractionEnabled = true
+        
+        //dismiss the keyboard when you click somewhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(PostViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PostViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     
@@ -71,14 +79,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //post button clicked
     @IBAction func postClicked(_ sender: Any) {
-        
-//        self.owner = owner
-//        self.postedDate = postedDate
-//        self.photoUrl = URL(string: photoUrl)
-//        self.location = location
-//        self.caption = caption
-//        self.comments = comments
-//        self.likes = likes
         
         //collect information
         let location = locationField.text
@@ -127,6 +127,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                         }
                         else {
                             print("data uploaded successfully")
+                            self.postImageView.image = #imageLiteral(resourceName: "image_placeholder")
+                            self.captionField.text = ""
+                            self.locationField.text = ""
                         }
                     })
                     
@@ -136,7 +139,67 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     
+    //hide the keyboard
+    @objc func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
     
+    //shift the screen up when the keyboard pops up
+    @objc func keyboardWillShow(notification: NSNotification) {
+        
+        //save the size as a constant on it's first appearance
+        if keyboardRealSize == nil {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                
+                keyboardRealSize = keyboardSize
+                if self.view.frame.origin.y >= 0{
+                    self.view.frame.origin.y -= (keyboardRealSize?.height)!
+                }
+                else {
+                    self.view.frame.origin.y += (keyboardRealSize?.height)!
+                }
+            }
+        }
+        else {
+            if self.view.frame.origin.y >= 0{
+                self.view.frame.origin.y -= (keyboardRealSize?.height)!
+            }
+            else {
+                self.view.frame.origin.y += (keyboardRealSize?.height)!
+            }
+        }
+    
+        
+    }
+    //shift the screen down when the keyboard pops up
+    @objc func keyboardWillHide(notification: NSNotification) {
+        //save the size as a constant on it's first appearance
+        if keyboardRealSize == nil {
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                
+                keyboardRealSize = keyboardSize
+
+                if self.view.frame.origin.y <= 0{
+                    self.view.frame.origin.y += (keyboardRealSize?.height)!
+                }
+                else {
+                    self.view.frame.origin.y -= (keyboardRealSize?.height)!
+                }
+
+            }
+        }
+        else {
+
+            if self.view.frame.origin.y <= 0{
+                self.view.frame.origin.y += (keyboardRealSize?.height)!
+            }
+            else {
+                self.view.frame.origin.y -= (keyboardRealSize?.height)!
+            }
+            
+        }
+    }
     
     
     
