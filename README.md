@@ -37,15 +37,11 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] Uses firebase instead of parse
-- [ ] User can sign in using google or with an email/password
-- [ ] Keyboard shifts the screen up so you can still see what you are typing in a text box
-- [ ] Keyboard 
+- [X] Uses firebase instead of parse
+- [X] User can sign in using google or with an email/password
+- [X] Keyboard shifts the screen up so you can still see what you are typing in a text box
+- [X] User can add their location to a post
 
-Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
-
-1.
-2.
 
 ## Video Walkthrough
 
@@ -65,3 +61,5 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+Completely learning how to use firebase auth, storage, and the realtime database took a lot of time since the project was explained to use parse.
