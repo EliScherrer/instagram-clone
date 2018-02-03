@@ -17,12 +17,13 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import GoogleSignIn
+import AlamofireImage
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var posts: [Post]?
+    var posts = [Post]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //get the data and create Post objects
         fetchAndStorePosts()
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        posts = [Post]()
+        fetchAndStorePosts()
     }
 
     func fetchAndStorePosts() {
@@ -86,9 +95,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let values = snapshot.value as? NSDictionary {
 
                 for (key, value) in values {
-                    print(key)
-                    print(value)
                     if let obj = value as? [String: Any] {
+                        print(key)
+                        print(value)
                         
                         let owner = obj["owner"] as! String
                         let dateString = obj["date"] as! String
@@ -106,15 +115,16 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         
                         
                         let post = Post(owner: owner, postedDate: date!, photoUrl: photoUrl, location: location, caption: caption, comments: comments, likes: likes)
-                        self.posts?.append(post)
+                        self.posts.append(post)
                     }
                 }
+                print("post count = \(self.posts.count ?? -1)")
+                self.tableView.reloadData()
             }
             
         }) { (error) in
             print("error: " + error.localizedDescription)
         }
-        
     }
     
     @IBAction func onLogout(_ sender: Any) {
@@ -126,7 +136,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if posts != nil {
-            return posts!.count
+            return posts.count
         }
         else {
             return 0
@@ -137,9 +147,19 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
         
-        let post = posts![indexPath.row]
+        let post = posts[indexPath.row]
         
+        //TODO fix all of these values
+        cell.postImage.af_setImage(withURL: post.photoUrl! )
+        cell.usernameLabel.text = post.owner
+        cell.usernameLabel2.text = post.owner
+        cell.locationLabel.text = post.location
+        cell.captionLabel.text = post.caption
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: post.postedDate!)
+        cell.timestampLabel.text = dateString
         
         
         return cell
