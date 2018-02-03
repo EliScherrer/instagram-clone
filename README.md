@@ -2,24 +2,24 @@
 
 **Instagram-clone** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **15** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-- [ ] User can sign up to create a new account using Parse authentication (+1pt)
-- [ ] User can log in and log out of his or her account (+1pt)
+- [X] User can sign up to create a new account using Firebase authentication (+1pt)
+- [X] User can log in and log out of his or her account (+1pt)
 - [ ] The current signed in user is persisted across app restarts (+1pt)
-- [ ] User can take a photo, add a caption, and post it to "Instagram" (+2pt)
-- [ ] User can view the last 20 posts submitted to "Instagram" (+2pt)
+- [X] User can take a photo, add a caption, and post it to "Instagram" (+2pt)
+- [X] User can view the last 20 posts submitted to "Instagram" (+2pt)
 - [ ] User can pull to refresh the last 20 posts submitted to "Instagram" (+1pt)
 - [ ] User can tap a post to view post details, including timestamp and caption (+2pt)
 
 The following **optional** features are implemented:
 
-- [ ] Style the login page to look like the real Instagram login page (+1pt)
-- [ ] Style the feed to look like the real Instagram feed (+1pt)
+- [X] Style the login page to look like the real Instagram login page (+1pt)
+- [X] Style the feed to look like the real Instagram feed (+1pt)
 - [ ] User can use a tab bar to switch between all "Instagram" posts and posts published only by the user. AKA, tabs for Home Feed and Profile (+2pt)
 - [ ] Add a custom camera using the CameraManager library (+1pt)
 - [ ] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling (+2pt)
@@ -37,7 +37,10 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [ ] Uses firebase instead of parse
+- [ ] User can sign in using google or with an email/password
+- [ ] Keyboard shifts the screen up so you can still see what you are typing in a text box
+- [ ] Keyboard 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
