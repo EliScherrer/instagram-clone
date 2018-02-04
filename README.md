@@ -1,8 +1,8 @@
-# Project 4 - *Instagram-clone*
+# Project 4 - *InstaClone*
 
-**Instagram-clone** is a photo sharing app using Parse as its backend.
+**InstaClone** is a photo sharing app using Parse as its backend.
 
-Time spent: **15** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
