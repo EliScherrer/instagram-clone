@@ -6,13 +6,6 @@
 //  Copyright © 2018 Eli Scherrer. All rights reserved.
 //
 
-// TODO
-// 1. figure out how to post pictures from the user's photo library
-// 2. save the photo in firebase
-    // 2a. save the refrence to where the photo was saved
-// 3. collect other information and user infromation to fill out the rest of the information that goes along witha post
-
-
 
 
 import UIKit
@@ -29,7 +22,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var postImage: UIImage?
     var keyboardRealSize: CGRect?
     
-    let storage = Storage.storage()
+    let storage = Storage.storage() //reference to firebase storage
+    
+    var activityIndicator = UIActivityIndicatorView()
     
     
     override func viewDidLoad() {
@@ -44,8 +39,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
+        //add handlers for when the keyboard in showing/disapearing
         NotificationCenter.default.addObserver(self, selector: #selector(PostViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(PostViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 4.0, y: 4.0)
+        activityIndicator.transform = transform
+        activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+
         
     }
     
@@ -80,6 +85,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //post button clicked
     @IBAction func postClicked(_ sender: Any) {
         
+        //hide keyboard and start animating the loading indicator
+        view.endEditing(true)
+        self.activityIndicator.startAnimating()
+        
         //collect information
         let location = locationField.text
         let caption = captionField.text
@@ -90,7 +99,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let user = Auth.auth().currentUser
         var owner: String = ""
         if let user = user {
-            owner = user.uid
+            owner = user.displayName!
         }
         
         //convert date to string
@@ -126,10 +135,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                             print(err ?? "error?")
                         }
                         else {
+                            //upload finished, reset all of the stuff and stop the loading indicator
                             print("data uploaded successfully")
                             self.postImageView.image = #imageLiteral(resourceName: "image_placeholder")
                             self.captionField.text = ""
                             self.locationField.text = ""
+                            self.activityIndicator.stopAnimating()
                         }
                     })
                     

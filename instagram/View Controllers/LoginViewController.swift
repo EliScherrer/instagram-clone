@@ -40,9 +40,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         
         //set delegates for google signin
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signIn()
+        //GIDSignIn.sharedInstance().signIn()
         
         googleSignInButton.style = .wide
+        
         
         //set background gradient
         let grad = CAGradientLayer()
@@ -69,6 +70,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         
         //dismiss the keyboard when you tap somewhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false //so that google sign in button still works
         view.addGestureRecognizer(tap)
         
     }

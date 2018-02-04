@@ -13,7 +13,7 @@
 // - let the user comment on pics
 // - let the user like a picture
 // - change the date thing to show time since instead
-// - change the username to be the actual username instead of an id
+// - make the keyboard shift up less
 
 
 import UIKit
@@ -175,6 +175,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return
     }
 
+    //pop up for the user to create a username
     func createUserNamePrompt() {
         // print out the user info or prompt the user to create a username if they haven't already
         let user = Auth.auth().currentUser
@@ -213,6 +214,20 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print("uid: \(uid)")
                 print("email: \(email!)")
                 print("display name: \(displayName!)")
+            }
+        }
+    }
+    
+    //when the user clicks on a post it takes them to the details page and passes the info
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "detailSegue" {
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell ) {
+                let post = filteredPosts[indexPath.row]
+                let detailViewController = segue.destination as! DetailViewController
+                detailViewController.post = post
             }
         }
     }
