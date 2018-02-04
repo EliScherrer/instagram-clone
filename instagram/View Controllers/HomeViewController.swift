@@ -37,6 +37,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         self.tableView.separatorStyle = .none
         
+        //auto layout stuff for cells
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 382
+        
         createUserNamePrompt()
         
         // Initialize a UIRefreshControl
