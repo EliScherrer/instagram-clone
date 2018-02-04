@@ -47,7 +47,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-gif is too long to show, go to this link -> https://i.imgur.com/q8qftd1.gif
+gif is too long to show, go to this link -> https://i.imgur.com/KuK4a6Z.gif
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
