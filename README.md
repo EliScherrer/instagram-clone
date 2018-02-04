@@ -23,8 +23,7 @@ The following **optional** features are implemented:
 - [ ] User can use a tab bar to switch between all "Instagram" posts and posts published only by the user. AKA, tabs for Home Feed and Profile (+2pt)
 - [ ] Add a custom camera using the CameraManager library (+1pt)
 - [X] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling (+2pt)
-- [ ] Show the username and creation time for each post using section headers (+1pt)
-   - If you use TableView Section Headers to display the the username and creation time, you'll get "sticky headers" similar to the actual Instagram app.
+- [X] Show the username and creation time for each post (+1pt)
 - [X] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse (+1pt)
 - User Profiles:
    - [ ] Allow the logged in user to add a profile photo (+2pt)
@@ -41,6 +40,7 @@ The following **additional** features are implemented:
 - [X] User can sign in using google or with an email/password
 - [X] Keyboard shifts the screen up so you can still see what you are typing in a text box
 - [X] User can add their location to a post
+- [X] Autolayout on all views
 
 
 ## Video Walkthrough
