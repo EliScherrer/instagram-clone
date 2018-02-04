@@ -8,11 +8,9 @@
 
 // TODOS
 // - change the loading method that it actually downloads more instead of showing more when you pull down
-// - make it so the user can click on a photo and bring up a details screen
 // - add autolayout
 // - let the user comment on pics
 // - let the user like a picture
-// - change the date thing to show time since instead
 // - make the keyboard shift up less
 
 
@@ -21,6 +19,7 @@ import Firebase
 import FirebaseAuth
 import GoogleSignIn
 import AlamofireImage
+import DateTools
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     
@@ -28,7 +27,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var posts = [Post]()
     var filteredPosts = [Post]()
-    var postCount = 5
+    var postCount = 20
     var isMoreDataLoading = false
     
     override func viewDidLoad() {
@@ -128,16 +127,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let post = filteredPosts[indexPath.row]
         
-        //TODO fix all of these values
         cell.postImage.af_setImage(withURL: post.photoUrl! )
         cell.usernameLabel.text = post.owner
         cell.usernameLabel2.text = post.owner
         cell.locationLabel.text = post.location
         cell.captionLabel.text = post.caption
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = dateFormatter.string(from: post.postedDate!)
+        //convert the date to a cool format
+        let nsPostedDate = post.postedDate! as NSDate
+        let dateString = nsPostedDate.timeAgoSinceNow()
         cell.timestampLabel.text = dateString
         
         
@@ -159,7 +157,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 //don't try to load any more if there aren't anymore
                 if (postCount < filteredPosts.count) {
                     //increase the number of posts and refresh
-                    postCount += 5
+                    postCount += 10
                     self.tableView.reloadData()
                     
                     isMoreDataLoading = false

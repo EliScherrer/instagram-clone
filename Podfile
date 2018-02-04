@@ -12,6 +12,7 @@ target 'instagram' do
     pod 'GoogleSignIn'
     pod 'Firebase/Storage'
     pod 'AlamofireImage'
+    pod 'DateTools'
 
   target 'instagramTests' do
     inherit! :search_paths

@@ -26,9 +26,9 @@ class DetailViewController: UIViewController {
             usernameLabel.text = post.owner
             captionLabel.text = post.caption
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let dateString = dateFormatter.string(from: (post.postedDate!))
+            //convert the date to a cool format
+            let nsPostedDate = post.postedDate! as NSDate
+            let dateString = nsPostedDate.timeAgoSinceNow()
             timestampLabel.text = dateString
         }
         
