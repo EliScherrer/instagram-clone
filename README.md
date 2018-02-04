@@ -25,7 +25,7 @@ The following **optional** features are implemented:
 - [X] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling (+2pt)
 - [ ] Show the username and creation time for each post using section headers (+1pt)
    - If you use TableView Section Headers to display the the username and creation time, you'll get "sticky headers" similar to the actual Instagram app.
-- [ ] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse (+1pt)
+- [X] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse (+1pt)
 - User Profiles:
    - [ ] Allow the logged in user to add a profile photo (+2pt)
    - [ ] Display the profile photo with each post (+1pt)
